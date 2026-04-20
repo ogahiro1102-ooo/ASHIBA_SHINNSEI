@@ -1,153 +1,168 @@
+```html id="8f2k1m"
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>足場架設・撤去申請</title>
 
 <style>
-
 body{
-font-family:sans-serif;
-background:#f2f4f7;
-padding:20px;
+  font-family:sans-serif;
+  background:#f2f4f7;
+  padding:10px;
+  margin:0;
 }
 
 .card{
-background:#fff;
-padding:20px;
-border-radius:12px;
-max-width:520px;
-margin:auto;
+  background:#fff;
+  padding:16px;
+  border-radius:12px;
+  width:100%;
+  max-width:520px;
+  margin:auto;
+}
+
+h2,h3{
+  margin-top:0;
 }
 
 label{
-display:block;
-margin-top:12px;
-font-weight:bold
+  display:block;
+  margin-top:12px;
+  font-weight:bold;
 }
 
 input,select,textarea{
-width:100%;
-padding:8px;
-margin-top:4px;
-border-radius:6px;
-border:1px solid #ccc;
-box-sizing:border-box
+  width:100%;
+  padding:10px;
+  margin-top:4px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  box-sizing:border-box;
+  font-size:16px;
 }
 
 button{
-margin-top:15px;
-padding:10px;
-width:100%;
-background:#2b7cff;
-color:white;
-border:none;
-border-radius:8px;
-font-size:14px;
+  margin-top:14px;
+  padding:14px;
+  width:100%;
+  background:#2b7cff;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:bold;
 }
 
 button:disabled{
-background:#999;
+  background:#999;
 }
 
-table{
-margin-top:25px;
-width:100%;
-border-collapse:collapse;
+.subBtn{
+  background:#3498db;
 }
 
-td,th{
-border:1px solid #ccc;
-padding:6px;
-font-size:12px;
-text-align:center;
-}
-
-.shipWrap{display:flex}
-
-.prefix{
-background:#ddd;
-padding:8px;
-border:1px solid #ccc;
-border-right:none;
-border-radius:6px 0 0 6px;
-}
-
-.shipInput{
-border-radius:0 6px 6px 0
+.delBtn{
+  background:#e74c3c;
+  width:33%;
+  padding:8px;
+  font-size:13px;
+  margin-top:10px;
+  margin-left:auto;
+  display:block;
 }
 
 .cancelBtn{
-background:#e74c3c;
+  background:#e74c3c;
+  padding:8px;
+  font-size:12px;
+}
+
+.reqBox{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin-top:16px;
+  background:#fafafa;
+}
+
+.reqTitle{
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.shipWrap{
+  display:flex;
+  margin-top:4px;
+}
+
+.prefix{
+  background:#ddd;
+  padding:10px;
+  border:1px solid #ccc;
+  border-right:none;
+  border-radius:6px 0 0 6px;
+  display:flex;
+  align-items:center;
+  font-weight:bold;
+}
+
+.shipInput{
+  border-radius:0 6px 6px 0;
+}
+
+table{
+  margin-top:22px;
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  border:1px solid #ccc;
+  padding:6px;
+  font-size:12px;
+  text-align:center;
 }
 
 #status{
-margin-top:10px;
-font-weight:bold;
-text-align:center;
+  margin-top:10px;
+  text-align:center;
+  font-weight:bold;
 }
 
+@media (max-width:600px){
+  .card{
+    padding:12px;
+  }
+
+  th,td{
+    font-size:11px;
+    padding:4px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <div class="card">
 
-<h2>足場架設・撤去申請</h2>
-
-<label>作業日</label>
-<input type="date" id="date">
-
-<label>時間</label>
-<select id="time"></select>
+<h2>🪜 足場架設・撤去申請</h2>
 
 <label>業者名</label>
 <input id="company">
 
-<label>作業場所</label>
-<select id="place">
-<option value="">選択</option>
-<option>A棟</option>
-<option>B棟</option>
-<option>C棟</option>
-<option>SUB定盤</option>
-<option>ドック</option>
-<option>渠底</option>
-<option>南岸</option>
-<option>艤装船</option>
-<option>南定盤</option>
-<option>北定盤</option>
-<option>ブロック置き場</option>
-<option>その他</option>
-</select>
+<div id="requestArea"></div>
 
-<label>船番</label>
-
-<div class="shipWrap">
-<div class="prefix">SA</div>
-<input id="ship" class="shipInput">
-</div>
-
-<label>区画</label>
-<input id="area">
-
-<label>作業区分</label>
-<select id="type">
-<option>架設</option>
-<option>撤去</option>
-</select>
-
-<label>備考</label>
-<textarea id="note"></textarea>
-
-<button id="sendBtn">申請</button>
+<button type="button" class="subBtn" id="addBtn">＋申請行を追加</button>
+<button type="button" id="sendBtn">まとめて申請</button>
 
 <div id="status"></div>
 
 <h3>あなたの申請（2日以内）</h3>
 
 <table>
-
 <thead>
 <tr>
 <th>日</th>
@@ -157,62 +172,131 @@ text-align:center;
 <th></th>
 </tr>
 </thead>
-
 <tbody id="myList"></tbody>
-
 </table>
 
 </div>
 
 <script>
-
 const GAS_URL="https://script.google.com/macros/s/AKfycbwKHAEVWUx4hYehXZ7xqwI8w2-PYcffU7sP3lNhBhysUyH_t9XAcKqdJjiXT1_CiIJ3/exec";
 
+const company=document.getElementById("company");
+const requestArea=document.getElementById("requestArea");
+const addBtn=document.getElementById("addBtn");
 const sendBtn=document.getElementById("sendBtn");
 const status=document.getElementById("status");
 
-const time=document.getElementById("time");
-const date=document.getElementById("date");
-const company=document.getElementById("company");
-const place=document.getElementById("place");
-const ship=document.getElementById("ship");
-const area=document.getElementById("area");
-const type=document.getElementById("type");
-const note=document.getElementById("note");
-
+let rowCount=0;
 let sending=false;
+const MAX_ROWS=5;
 
-
-/* 時間プルダウン */
-
-for(let h=8;h<=17;h++){
-
-let t=("0"+h).slice(-2)+":00";
-
-let opt=document.createElement("option");
-
-opt.value=t;
-opt.textContent=t;
-
-time.appendChild(opt);
-
+/* 今日 */
+function today(){
+  return new Date().toISOString().split("T")[0];
 }
 
+/* 時間生成 */
+function timeOptions(){
+  let html='<option value="">選択してください</option>';
+
+  for(let h=8;h<=17;h++){
+    let t=("0"+h).slice(-2)+":00";
+    html+=`<option value="${t}">${t}</option>`;
+  }
+
+  return html;
+}
 
 /* ID生成 */
-
 function makeID(){
-return Math.random().toString(36).substring(2,10);
+  return Math.random().toString(36).substring(2,10);
 }
 
+/* 行追加 */
+function addRow(){
+
+  if(rowCount>=MAX_ROWS){
+    alert("最大5件までです");
+    return;
+  }
+
+  rowCount++;
+
+  const div=document.createElement("div");
+  div.className="reqBox";
+
+  div.innerHTML=`
+    <div class="reqTitle">申請 ${rowCount}件目</div>
+
+    <label>作業日</label>
+    <input type="date" class="date" value="${today()}">
+
+    <label>時間</label>
+    <select class="time">
+      ${timeOptions()}
+    </select>
+
+    <label>作業場所</label>
+    <select class="place">
+      <option value="">選択</option>
+      <option>A棟</option>
+      <option>B棟</option>
+      <option>C棟</option>
+      <option>SUB定盤</option>
+      <option>ドック</option>
+      <option>渠底</option>
+      <option>南岸</option>
+      <option>艤装船</option>
+      <option>南定盤</option>
+      <option>北定盤</option>
+      <option>ブロック置き場</option>
+      <option>その他</option>
+    </select>
+
+    <label>船番</label>
+    <div class="shipWrap">
+      <div class="prefix">SA</div>
+      <input class="ship shipInput">
+    </div>
+
+    <label>区画</label>
+    <input class="area">
+
+    <label>作業区分</label>
+    <select class="type">
+      <option>架設</option>
+      <option>撤去</option>
+    </select>
+
+    <label>備考</label>
+    <textarea class="note"></textarea>
+
+    <button type="button" class="delBtn" onclick="removeRow(this)">この行を削除</button>
+  `;
+
+  requestArea.appendChild(div);
+}
+
+/* 行削除 */
+function removeRow(btn){
+  btn.closest(".reqBox").remove();
+  renumber();
+}
+
+/* 番号振り直し */
+function renumber(){
+  const rows=document.querySelectorAll(".reqBox");
+  rowCount=rows.length;
+
+  rows.forEach((row,i)=>{
+    row.querySelector(".reqTitle").textContent=`申請 ${i+1}件目`;
+  });
+}
 
 /* 履歴表示 */
-
 function loadMy(){
 
 let data=JSON.parse(localStorage.getItem("myScaffold")||"[]");
-
-/* 48時間以内 */
 
 const limit=Date.now()-172800000;
 
@@ -220,136 +304,135 @@ data=data.filter(d=>d.timeStamp>limit);
 
 localStorage.setItem("myScaffold",JSON.stringify(data));
 
-/* 新しい順 */
-
 data.sort((a,b)=>b.timeStamp-a.timeStamp);
 
 const tbody=document.getElementById("myList");
-
 tbody.innerHTML="";
 
 data.forEach(d=>{
 
-let dt=new Date(d.date);
+  let dt=new Date(d.date);
+  let shortDate=(dt.getMonth()+1)+"/"+dt.getDate();
 
-let shortDate=(dt.getMonth()+1)+"/"+dt.getDate();
+  const tr=document.createElement("tr");
 
-const tr=document.createElement("tr");
+  tr.innerHTML=
+    "<td>"+shortDate+"</td>"+
+    "<td>"+d.time+"</td>"+
+    "<td>"+d.ship+"</td>"+
+    "<td>"+d.place+"</td>"+
+    "<td><button class='cancelBtn' onclick='cancelReq(\""+d.id+"\")'>取消</button></td>";
 
-tr.innerHTML=
-
-"<td>"+shortDate+"</td>"+
-"<td>"+d.time+"</td>"+
-"<td>"+d.ship+"</td>"+
-"<td>"+d.place+"</td>"+
-"<td><button class='cancelBtn' onclick='cancelReq(\""+d.id+"\")'>取消</button></td>";
-
-tbody.appendChild(tr);
+  tbody.appendChild(tr);
 
 });
 
 }
 
+/* 入力初期化 */
+function resetForm(){
 
-/* 申請 */
+  requestArea.innerHTML="";
+  rowCount=0;
+  addRow();
+}
 
-sendBtn.addEventListener("click",send);
-
-async function send(){
+/* 一括送信 */
+async function sendAll(){
 
 if(sending)return;
 
-
-/* 同内容ロック */
-
-const hash = JSON.stringify({
-date:date.value,
-time:time.value,
-company:company.value,
-place:place.value,
-ship:ship.value,
-area:area.value,
-type:type.value
-});
-
-const prev = localStorage.getItem("scaffoldHash");
-const lastTime = localStorage.getItem("scaffoldTime");
-
-if(prev === hash && Date.now() - lastTime < 60000){
-
-status.textContent="同じ内容の申請は60秒以内に送信できません";
-
-return;
-
+if(!company.value.trim()){
+  status.textContent="業者名を入力してください";
+  return;
 }
 
+const rows=document.querySelectorAll(".reqBox");
 
-const data={
+if(rows.length===0){
+  status.textContent="申請行がありません";
+  return;
+}
 
-mode:"add",
-id:makeID(),
-timeStamp:Date.now(),
+let list=[];
 
-date:date.value,
-time:time.value,
-company:company.value,
-place:place.value,
-ship:"SA"+ship.value,
-area:area.value,
-type:type.value,
-note:note.value
+/* データ作成 */
+for(const row of rows){
 
-};
+  const data={
 
+    mode:"add",
+    id:makeID(),
+    timeStamp:Date.now(),
 
-sending=true;
+    date:row.querySelector(".date").value,
+    time:row.querySelector(".time").value,
+    company:company.value.trim(),
+    place:row.querySelector(".place").value,
+    ship:"SA"+row.querySelector(".ship").value.trim(),
+    area:row.querySelector(".area").value.trim(),
+    type:row.querySelector(".type").value,
+    note:row.querySelector(".note").value.trim()
 
-sendBtn.disabled=true;
+  };
 
-status.textContent="送信中...";
+  if(!data.date || !data.time || !data.place ||
+     !data.ship.replace("SA","") || !data.area){
+    status.textContent="未入力があります";
+    return;
+  }
 
+  list.push(data);
+}
 
-await fetch(GAS_URL,{
-method:"POST",
-mode:"no-cors",
-body:JSON.stringify(data)
+/* 確認画面 */
+let msg=`以下の${list.length}件を申請します\n\n業者名：${company.value}\n\n`;
+
+list.forEach((d,i)=>{
+  msg += `${i+1}. ${d.date} ${d.time} ${d.ship} ${d.place} ${d.type}\n`;
 });
 
+msg += "\nこの内容で送信しますか？";
 
-localStorage.setItem("scaffoldHash",hash);
-localStorage.setItem("scaffoldTime",Date.now());
+if(!confirm(msg)) return;
 
+/* 送信 */
+sending=true;
+sendBtn.disabled=true;
+status.textContent="送信中...";
 
-let my=JSON.parse(localStorage.getItem("myScaffold")||"[]");
+for(const data of list){
 
-my.push(data);
+  await fetch(GAS_URL,{
+    method:"POST",
+    mode:"no-cors",
+    body:JSON.stringify(data)
+  });
 
-localStorage.setItem("myScaffold",JSON.stringify(my));
-
+  let my=JSON.parse(localStorage.getItem("myScaffold")||"[]");
+  my.push(data);
+  localStorage.setItem("myScaffold",JSON.stringify(my));
+}
 
 status.textContent="申請完了";
 
+resetForm();
 loadMy();
 
 sendBtn.disabled=false;
-
 sending=false;
 
 }
 
-
 /* 取消 */
-
 async function cancelReq(id){
 
 let my=JSON.parse(localStorage.getItem("myScaffold")||"[]");
-
 const item=my.find(x=>x.id==id);
 
 if(!item)return;
 
 let dt=new Date(item.date);
-
 let shortDate=(dt.getMonth()+1)+"/"+dt.getDate();
 
 const msg=
@@ -361,30 +444,33 @@ const msg=
 "区画: "+item.area+"\n"+
 "区分: "+item.type;
 
-const ok=confirm(msg);
-
-if(!ok)return;
+if(!confirm(msg)) return;
 
 await fetch(GAS_URL,{
-method:"POST",
-mode:"no-cors",
-body:JSON.stringify({
-mode:"delete",
-id:id
-})
+  method:"POST",
+  mode:"no-cors",
+  body:JSON.stringify({
+    mode:"delete",
+    id:id
+  })
 });
 
 my=my.filter(x=>x.id!=id);
-
 localStorage.setItem("myScaffold",JSON.stringify(my));
 
 loadMy();
 
 }
 
+/* 初期 */
+addBtn.addEventListener("click",addRow);
+sendBtn.addEventListener("click",sendAll);
+
+addRow();
 loadMy();
 
 </script>
 
 </body>
 </html>
+```
